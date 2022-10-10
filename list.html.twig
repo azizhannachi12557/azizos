@@ -1,0 +1,59 @@
+<html>
+<head>
+<style>
+table
+{
+border-style:solid;
+border-width:2px;
+border-color:pink;
+}
+</style>
+</head>
+{#{%set Nmax=0 %}#}
+{#{% for i in formation%}#}
+{#{%set Nmax=max(i.nb_participants,Nmax)%}#}
+{#{%endfor%}#}
+
+<body bgcolor="#EEFDEF">
+<table border='1'>
+<tr>
+<th>Ref</th>
+<th>Titre</th>
+<th>Description</th>
+<th>Date Debut</th>
+<th>Date fin</th>
+<th>Nombre de participiants</th>
+</tr>
+
+
+{% for f in formation %}
+  <tr>  
+  {#{%if f.nb_participants == Nmax%}#}
+  {#{% if 'theorique' in f.Description %}#}
+  <td> {{f.ref}}</td>
+  <td> {{f.Titre |upper}}</td>
+  <td> {{f.Description}}</td>
+  <td> {{f.date_debut}}</td>
+  <td> {{f.date_fin}}</td>
+  <td> {{f.nb_participants}}</td>
+  {#{%else%}
+  <h1> Le tableau est vide </h1>
+  #}
+  <td> {%if f.nb_participants==0 %}
+  <button onClick="getName({{f.Titre}})"> Participer </button>
+  {%endif%}
+  </td>
+</tr>
+{#{%endif %}#}
+
+{#{%endif %}#}
+{% endfor %}
+
+</table> 
+{%set Nt=0%}
+{%for i in formation%}
+{%set Nt=Nt+i.nb_participants%}
+{%endfor%}
+<h1> Le Nombre total des participants est: {{Nt}} </h1>
+</body>
+</html>
